@@ -152,19 +152,21 @@ fun GradientBadge(
 }
 
 // The dot of ConnectionStatusView. It pulses while something is under way.
+// Only a pulsing dot runs an animation: a still one draws once.
 @Composable
 fun StatusDot(color: Color, pulsing: Boolean, size: Dp = 10.dp) {
-    val transition = rememberInfiniteTransition(label = "pulse")
-    val phase by transition.animateFloat(0f, 1f, infiniteRepeatable(tween(800), RepeatMode.Reverse), label = "phase")
-    val p = if (pulsing) phase else 0f
-    Box(
-        Modifier
-            .size(size)
-            .scale(1f + 0.3f * p)
-            .alpha(1f - 0.4f * p)
-            .clip(CircleShape)
-            .background(color),
-    )
+    if (pulsing) {
+        val transition = rememberInfiniteTransition(label = "pulse")
+        val phase by transition.animateFloat(0f, 1f, infiniteRepeatable(tween(800), RepeatMode.Reverse), label = "phase")
+        Dot(color, size, Modifier.scale(1f + 0.3f * phase).alpha(1f - 0.4f * phase))
+    } else {
+        Dot(color, size, Modifier)
+    }
+}
+
+@Composable
+private fun Dot(color: Color, size: Dp, modifier: Modifier) {
+    Box(modifier.size(size).clip(CircleShape).background(color))
 }
 
 @Composable

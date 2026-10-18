@@ -16,7 +16,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedTextField
@@ -88,10 +87,9 @@ fun DashboardScreen(s: Snapshot?, actions: AppActions) {
             }
         }
 
-        Section(
-            stringResource(R.string.discovered_devices),
-            trailing = { CircularProgressIndicator(Modifier.size(16.dp), color = Tint.colors.secondary, strokeWidth = 2.dp) },
-        ) {
+        // No spinner: discovery never ends, and an endless animation costs
+        // battery. The empty state says that it searches.
+        Section(stringResource(R.string.discovered_devices)) {
             if (s.unpaired.isEmpty()) {
                 EmptyState(R.drawable.sym_radar, stringResource(R.string.searching_title), stringResource(R.string.searching_text))
             }

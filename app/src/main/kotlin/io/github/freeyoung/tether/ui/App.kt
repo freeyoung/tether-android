@@ -105,7 +105,9 @@ fun StatusView(status: Status) {
         Status.Disconnected -> c.red to R.string.status_disconnected
         Status.Off -> c.tertiary to R.string.off_title
     }
-    StatusLine(color, pulsing = status == Status.Pairing || status == Status.Searching, text = stringResource(text))
+    // Only pairing pulses: it ends soon. Searching can last for hours, while a
+    // paired computer sleeps, and an endless animation costs battery.
+    StatusLine(color, pulsing = status == Status.Pairing, text = stringResource(text))
 }
 
 @Composable
