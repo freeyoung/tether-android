@@ -148,7 +148,7 @@ fun SettingsScreen(s: Snapshot?, actions: AppActions) {
             )
         }
 
-        ListSection(stringResource(R.string.about)) {
+        ListSection(stringResource(R.string.about), footer = stringResource(R.string.unofficial)) {
             ValueRow(stringResource(R.string.version_label), BuildConfig.VERSION_NAME)
             RowDivider(16.dp)
             ValueRow(stringResource(R.string.engine_label), engineVersion ?: "—")

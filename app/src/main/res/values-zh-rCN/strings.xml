@@ -143,6 +143,7 @@
     <string name="engine_label">引擎</string>
     <string name="protocol_label">协议</string>
     <string name="service_type_label">服务类型</string>
+    <string name="unofficial">Tether for Android 不是 Tether 的官方应用，也不是 Tether 的作者做的。它只同步剪贴板和文件，功能和 Tether Desktop 一样。消息、通知和通话只在 iPhone 和 tetherd 之间。</string>
 
     <string name="experimental">实验性功能</string>
     <string name="auto_send">自动发送</string>

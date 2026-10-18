@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name" translatable="false">Tether</string>
+    <string name="app_name" translatable="false">Tether for Android</string>
+    <string name="launcher_name" translatable="false">Tether</string>
     <string name="share_label" translatable="false">Tether</string>
     <string name="tile_label">Send Clipboard</string>
 
@@ -156,6 +157,7 @@
     <string name="engine_label">Engine</string>
     <string name="protocol_label">Protocol</string>
     <string name="service_type_label">Service Type</string>
+    <string name="unofficial">Tether for Android is not an official app of Tether, and its authors do not make it. It syncs the clipboard and files only, as Tether Desktop does. Messages, notifications and calls are between the iPhone and tetherd.</string>
 
     <!-- Automatic sending, see ClipboardWatcher.kt -->
     <string name="experimental">Experimental</string>

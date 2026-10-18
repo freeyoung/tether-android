@@ -54,7 +54,7 @@ fun DashboardScreen(s: Snapshot?, actions: AppActions) {
     var manual by remember { mutableStateOf(false) }
     val enabled = actions.enabled.value
     Page(
-        title = stringResource(R.string.app_name),
+        title = stringResource(R.string.launcher_name),
         actions = {
             if (enabled && s != null) {
                 ToolbarPill {
