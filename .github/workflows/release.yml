@@ -1,0 +1,91 @@
+name: Release
+
+# Push a tag v<version> (v0.1.0) to build the signed APK and publish it in a
+# GitHub Release with SHA256SUMS. A tag with a suffix (v0.2.0-rc.1) makes a
+# prerelease. The version name comes from the tag, and the version code is
+# the number of commits.
+#
+# Android installs only signed APKs, and an update only over an app with the
+# same key. So every release is signed with one self-signed key:
+#   ANDROID_KEYSTORE           the key, as base64 of a PKCS#12 keystore with
+#                              the alias "tether"
+#   ANDROID_KEYSTORE_PASSWORD  its password, for the store and the key
+#
+# Run the workflow by hand to check that it builds: such a run uploads
+# nothing.
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  release:
+    name: Build and publish the APK
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      # The whole history: the version code is the number of commits.
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-go@v6
+        with:
+          go-version-file: go/go.mod
+          cache-dependency-path: go/go.sum
+
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: 21
+
+      - name: Install the Android platform and NDK
+        run: yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" "platforms;android-37.0" "ndk;30.0.16248370" > /dev/null
+
+      - name: Version
+        run: |
+          if [ "$GITHUB_REF_TYPE" = tag ]; then v="${GITHUB_REF_NAME#v}"; else v=0.0.0-dev; fi
+          echo "TETHER_VERSION=$v" >> "$GITHUB_ENV"
+
+      - name: Build the signed APK
+        env:
+          KEYSTORE: ${{ secrets.ANDROID_KEYSTORE }}
+          PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+        run: |
+          test -n "$KEYSTORE" || { echo "The secret ANDROID_KEYSTORE is missing." >&2; exit 1; }
+          key="$RUNNER_TEMP/release.jks"
+          props="$RUNNER_TEMP/release.properties"
+          trap 'rm -f "$key" "$props"' EXIT
+          echo "$KEYSTORE" | base64 -d > "$key"
+          printf 'storeFile=%s\nstorePassword=%s\nkeyAlias=tether\nkeyPassword=%s\n' "$key" "$PASSWORD" "$PASSWORD" > "$props"
+          ./gradlew --no-daemon assembleRelease -Ptether.version="$TETHER_VERSION" -Ptether.keystore="$props"
+          mkdir dist
+          apk="dist/TetherForAndroid-$TETHER_VERSION.apk"
+          cp app/build/outputs/apk/release/app-release.apk "$apk"
+          "$ANDROID_HOME/build-tools/37.0.0/apksigner" verify --print-certs "$apk"
+          (cd dist && sha256sum TetherForAndroid-*.apk > SHA256SUMS && cat SHA256SUMS)
+
+      - name: Publish the release
+        if: github.ref_type == 'tag'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          tag="$GITHUB_REF_NAME"
+          prerelease=false
+          case "$tag" in *-*) prerelease=true ;; esac
+          # A run again replaces the files of the release.
+          if gh release view "$tag" > /dev/null 2>&1; then
+            gh release upload "$tag" dist/* --clobber
+          else
+            gh release create "$tag" dist/* --title "Tether for Android ${tag#v}" --generate-notes --prerelease="$prerelease"
+          fi

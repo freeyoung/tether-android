@@ -45,11 +45,9 @@ The costs:
 
 ## Install
 
-There is no release yet. Android 10 or later: build the app (see [Build](#build)) and install it with adb:
+Download the APK from [Releases](../../releases) and open it on the phone. Android 10 or later.
 
-```bash
-adb install app/build/outputs/apk/debug/app-debug.apk
-```
+The APK is not from Google Play, so Android asks you to allow installs from the browser or the file manager. Each release is signed with the same key of this project, so an update installs over the app. A build of your own has another key: uninstall it before you install a release.
 
 ## Setup
 
@@ -103,6 +101,10 @@ For a signed release build, put the path of a properties file with `storeFile`, 
 ```
 
 The Go tests run the bridge against a second engine on one machine: pairing, clipboard text and images, and files in both directions. For a test computer, `go run github.com/freeyoung/tether-core-go/cmd/tether-headless@latest` runs the engine without a user interface. On the emulator, `adb forward tcp:15134 tcp:5134` lets it reach the phone at `127.0.0.1:15134`.
+
+### Release
+
+CI tests and builds the app. Push a tag such as `v0.1.0`, and `.github/workflows/release.yml` builds the signed APK and publishes it with SHA256SUMS. It signs with the key in the secrets `ANDROID_KEYSTORE` and `ANDROID_KEYSTORE_PASSWORD`. Keep a copy of this key: without it, a new release cannot install over the old one.
 
 ## License
 
