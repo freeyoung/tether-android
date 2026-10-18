@@ -348,3 +348,16 @@ func TestStateIsCoalesced(t *testing.T) {
 		t.Fatal("next after close")
 	}
 }
+
+// The engine reads its version from the build information: the version of
+// tether-core-go in go.mod, not the version for a local copy.
+func TestEngineVersion(t *testing.T) {
+	p := newPhone(t)
+	var v struct{ Version string }
+	if err := json.Unmarshal(p.call(t, "version", nil), &v); err != nil {
+		t.Fatal(err)
+	}
+	if v.Version == "" || v.Version == "0.0.0-dev" {
+		t.Fatalf("engine version %q", v.Version)
+	}
+}

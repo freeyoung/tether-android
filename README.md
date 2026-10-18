@@ -91,7 +91,7 @@ The engine is [tether-core-go](https://github.com/freeyoung/tether-core-go), whi
 ./gradlew assembleDebug   # app/build/outputs/apk/debug/app-debug.apk: Go 1.27, JDK 21, Android SDK 37, NDK 30.0.16248370
 ```
 
-Put the SDK path in `local.properties` (`sdk.dir=...`) or in `ANDROID_HOME`. Gradle runs `scripts/build-native.sh` first, which builds `libtether.so` for arm64-v8a and x86_64. In hello, the engine names its version in `go/go.mod`.
+Put the SDK path in `local.properties` (`sdk.dir=...`) or in `ANDROID_HOME`. Gradle runs `scripts/build-native.sh` first, which builds `libtether.so` for arm64-v8a and x86_64. The engine names its version, the one in `go/go.mod`, in hello: it reads it from the build information.
 
 For a signed release build, put the path of a properties file with `storeFile`, `storePassword`, `keyAlias` and `keyPassword` in the Gradle property `tether.keystore`, in `~/.gradle/gradle.properties`. Then run `./gradlew assembleRelease -Ptether.version=0.1.0`. `app/src/main/res/drawable/ic_launcher_foreground.xml` draws the icon of Tether Desktop as a vector.
 

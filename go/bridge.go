@@ -90,7 +90,7 @@ func (b *Bridge) Call(op string, raw []byte) ([]byte, error) {
 	case "snapshot":
 		return json.Marshal(snapshotOf(e.SnapshotNow()))
 	case "version":
-		return json.Marshal(map[string]string{"version": core.Version, "minPeerVersion": core.MinPeerVersion})
+		return json.Marshal(map[string]string{"version": core.EngineVersion(), "minPeerVersion": core.MinPeerVersion})
 	case "approve":
 		e.Approve(a.Fingerprint)
 	case "reject":
