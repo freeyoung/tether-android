@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="tile_label">发送剪贴板</string>
+
+    <string name="tab_dashboard">概览</string>
+    <string name="tab_clipboard">剪贴板</string>
+    <string name="tab_files">文件</string>
+    <string name="tab_settings">设置</string>
+
+    <string name="channel_running">运行状态</string>
+    <string name="channel_pairing">配对请求</string>
+    <string name="channel_files">文件</string>
+    <string name="channel_links">链接</string>
+    <string name="channel_problems">问题</string>
+    <string name="status_starting">正在启动…</string>
+    <string name="status_no_device">没有已连接的设备</string>
+    <string name="status_connected">已连接：%1$s</string>
+    <string name="stop">停止</string>
+    <string name="kind_phone">手机</string>
+    <string name="kind_computer">电脑</string>
+    <string name="pairing_title">%1$s 请求配对</string>
+    <string name="pairing_text">%1$s，指纹 %2$s</string>
+    <string name="allow">允许</string>
+    <string name="deny">拒绝</string>
+    <string name="file_received">来自 %1$s，已存到“下载”。</string>
+    <string name="file_not_saved">无法保存 %1$s</string>
+    <string name="file_not_sent">无法把 %1$s 发送到 %2$s</string>
+    <string name="link_title">打开收到的链接</string>
+    <string name="not_started">Tether 没有启动</string>
+    <string name="peer_outdated">%1$s 需要更新</string>
+    <string name="peer_outdated_text">它运行的版本 %1$s 太旧，无法同步。</string>
+
+    <string name="status_connected_short">已连接</string>
+    <string name="status_pairing">正在配对…</string>
+    <string name="status_searching">正在搜索…</string>
+    <string name="status_disconnected">未连接</string>
+    <string name="no_connection">没有连接</string>
+    <string name="off_title">Tether 已关闭</string>
+    <string name="off_text">打开后，才能和已配对的设备同步剪贴板和文件。</string>
+    <string name="turn_on">打开</string>
+    <string name="not_listening">无法监听端口 %1$d</string>
+    <string name="not_running">Tether 已关闭</string>
+
+    <string name="quick_actions">快捷操作</string>
+    <string name="send_clipboard">发送剪贴板</string>
+    <string name="send_files">发送文件</string>
+    <string name="my_devices">我的设备</string>
+    <string name="connected">已连接</string>
+    <string name="not_connected">未连接</string>
+    <string name="discovered_devices">发现的设备</string>
+    <string name="searching_title">正在搜索网络上的电脑…</string>
+    <string name="searching_text">请确认电脑上运行着 Tether Desktop 或 tetherd。</string>
+    <string name="battery_title">允许 Tether 在后台运行</string>
+    <string name="battery_text">不允许的话，手机可能为了省电停止 Tether。</string>
+    <string name="enter_address">手动连接</string>
+    <string name="manual_connection">手动连接</string>
+    <string name="host">主机</string>
+    <string name="host_or_ip">主机名或 IP</string>
+    <string name="port">端口</string>
+    <string name="connect">连接</string>
+    <string name="enter_address_text">用于不在列表里的电脑，例如通过 Tailscale 连接的电脑。</string>
+    <string name="pairing_accepted">已与 %1$s 配对</string>
+    <string name="pairing_rejected">电脑拒绝了请求</string>
+    <string name="pairing_failed">配对失败：%1$s</string>
+
+    <string name="pairing_sheet_title">设备配对</string>
+    <string name="pairing_inbound_computer">电脑 %1$s 请求和这台手机配对。请确认电脑上显示的指纹和下面的一样。</string>
+    <string name="pairing_inbound_phone">手机 %1$s 请求和这台手机配对。请确认那台手机上显示的指纹和下面的一样。</string>
+    <string name="pairing_outbound">正在等待 %1$s。请在电脑上允许请求。如果是 tetherd，请用这个指纹运行 tether accept。</string>
+    <string name="their_fingerprint">对方的指纹</string>
+    <string name="your_fingerprint">你的指纹</string>
+    <string name="accept">接受</string>
+    <string name="reject">拒绝</string>
+
+    <string name="clipboard_not_connected">连接设备后才能同步剪贴板</string>
+    <string name="send_to_devices">发送到设备</string>
+    <string name="send_to_devices_text">发送手机的剪贴板</string>
+    <string name="add_tile">快捷设置</string>
+    <string name="add_tile_text">添加“发送剪贴板”磁贴</string>
+    <string name="add_tile_by_hand">编辑快捷设置，把“发送剪贴板”磁贴拖进去。</string>
+    <string name="tile_already_added">快捷设置里已经有这个磁贴了</string>
+    <string name="history">历史记录</string>
+    <string name="history_empty">还没有剪贴板记录</string>
+    <string name="this_phone">这台手机</string>
+    <string name="paired_device">已配对的设备</string>
+    <string name="image">图片</string>
+    <string name="copied_again">已复制，并发送到你的设备</string>
+    <string name="image_gone">这张图片已经没有了</string>
+    <string name="send_clipboard_help">安卓只允许 Tether 在打开时读取剪贴板，所以每次打开 Tether，它都会发送你复制的内容。其他时候，请用快捷设置里的磁贴、通知，或把文字分享给 Tether。</string>
+    <plurals name="sent_to">
+        <item quantity="other">已发送到 %d 台设备</item>
+    </plurals>
+    <string name="sent_nobody">没有已连接的设备</string>
+    <string name="clipboard_empty">没有可发送的内容</string>
+    <string name="clipboard_secret">剪贴板里是密码，Tether 没有发送</string>
+
+    <string name="open_downloads">打开“下载”</string>
+    <string name="files_not_connected">连接设备后才能传输文件</string>
+    <string name="send_a_file">发送文件</string>
+    <string name="send_a_file_text">发送文档和压缩包</string>
+    <string name="send_a_photo">发送照片</string>
+    <string name="send_a_photo_text">从相册选择</string>
+    <string name="files_in_progress">进行中</string>
+    <string name="completed">已完成</string>
+    <string name="no_transfers">还没有传输记录</string>
+    <string name="outgoing_to">发送到 %1$s</string>
+    <string name="incoming_from">来自 %1$s</string>
+    <string name="tap_to_open">点按打开 · %1$s</string>
+    <string name="delivered">已送达 · %1$s</string>
+    <string name="transfer_failed">失败：%1$s</string>
+    <string name="file_sent">已把 %1$s 发送到 %2$s</string>
+    <string name="sending_to">正在发送到 %1$s</string>
+    <plurals name="queued">
+        <item quantity="other">还有 %d 个文件在等待</item>
+    </plurals>
+    <plurals name="share_title">
+        <item quantity="other">把 %d 个文件发送到</item>
+    </plurals>
+    <string name="share_nobody">没有已连接的设备。</string>
+
+    <string name="this_device">本机</string>
+    <string name="this_device_text">你的设备看到的名字</string>
+    <string name="tls_fingerprint">TLS 指纹</string>
+    <string name="copy_fingerprint">复制指纹</string>
+    <string name="fingerprint_copied">已复制指纹</string>
+    <string name="paired_devices">已配对的设备</string>
+    <string name="no_paired_devices">没有已配对的设备</string>
+    <string name="swipe_to_unpair">向左滑动可以取消配对。</string>
+    <string name="unpair">取消配对</string>
+    <string name="unpair_title">取消和 %1$s 的配对？</string>
+    <string name="unpair_text">之后要重新配对才能连接。</string>
+    <string name="background">后台</string>
+    <string name="run_tether">运行 Tether</string>
+    <string name="run_tether_text">关闭应用后保持连接</string>
+    <string name="battery_label">电池优化</string>
+    <string name="battery_unrestricted">不受限制：Tether 会一直运行</string>
+    <string name="battery_restricted">受限制：手机可能停止 Tether</string>
+    <string name="connection">连接</string>
+    <string name="status">状态</string>
+    <string name="listening_label">监听端口</string>
+    <string name="about">关于</string>
+    <string name="version_label">版本</string>
+    <string name="engine_label">引擎</string>
+    <string name="protocol_label">协议</string>
+    <string name="service_type_label">服务类型</string>
+
+    <string name="experimental">实验性功能</string>
+    <string name="auto_send">自动发送</string>
+    <string name="auto_send_text">在其他应用里复制的内容也自动发送</string>
+    <string name="auto_send_active">已开启。每次 Tether 读取剪贴板，安卓都会显示一条提示。</string>
+    <string name="auto_send_needs_permission">需要下面 2 项权限</string>
+    <string name="auto_send_needs_approval">正在等待日志权限：离开 Tether 再重新打开，在安卓弹出的对话框里允许访问</string>
+    <string name="auto_send_footer">安卓不让后台应用读取剪贴板。Tether 通过读取系统日志得知你复制了内容，然后短暂切到前台读取剪贴板。每次 Tether 重新启动（例如手机重启后），安卓都会再次询问日志权限。</string>
+    <string name="log_access">日志权限</string>
+    <string name="log_access_text">只能用 adb 授予。点按复制命令：</string>
+    <string name="overlay_access">显示在其他应用上层</string>
+    <string name="overlay_access_text">让 Tether 能从后台切到前台</string>
+    <string name="granted">已授予</string>
+    <string name="command_copied">已复制命令</string>
+
+    <string name="sync">同步</string>
+    <string name="write_clipboard">自动写入剪贴板</string>
+    <string name="write_clipboard_text">把其他设备复制的内容放到这台手机的剪贴板</string>
+    <string name="write_clipboard_footer">每次有应用写入剪贴板，安卓都会显示预览。关闭后，其他设备复制的内容只进历史记录，点一下才复制。</string>
+    <string name="access_messages">剪贴板访问提示</string>
+    <string name="access_messages_text">要隐藏每次读取时的提示，请在隐私设置里关闭“显示剪贴板访问通知”。关闭后，其他应用读取剪贴板时也不会再提示。</string>
+</resources>

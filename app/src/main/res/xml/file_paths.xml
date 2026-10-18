@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths>
+    <!-- Clipboard images from peers, see go/bridge.go. -->
+    <cache-path name="clipboard" path="clipboard/" />
+    <!-- Clipboard images this phone sent, see PhoneClipboard.kt. -->
+    <cache-path name="sent" path="sent/" />
+</paths>

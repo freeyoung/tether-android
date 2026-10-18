@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- The devices of the app icon with thicker lines, for 24 dp. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <group
+        android:scaleX="0.0551"
+        android:scaleY="0.0551"
+        android:translateX="1.67"
+        android:translateY="4.56">
+        <path
+            android:pathData="M109.76,11 A26,26 0 0 1 131,0 L349,0 A26,26 0 0 1 375,26 L375,154 A26,26 0 0 1 349,180 L164,180"
+            android:strokeWidth="40"
+            android:strokeColor="#FFFFFFFF"
+            android:strokeLineJoin="round" />
+        <path
+            android:pathData="M240,180 L240,226 M190,240 L290,240"
+            android:strokeWidth="40"
+            android:strokeColor="#FFFFFFFF"
+            android:strokeLineCap="round" />
+        <path
+            android:pathData="M30,55 L90,55 A30,30 0 0 1 120,85 L120,240 A30,30 0 0 1 90,270 L30,270 A30,30 0 0 1 0,240 L0,85 A30,30 0 0 1 30,55 Z"
+            android:strokeWidth="40"
+            android:strokeColor="#FFFFFFFF" />
+    </group>
+</vector>

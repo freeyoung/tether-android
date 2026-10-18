@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name" translatable="false">Tether</string>
+    <string name="share_label" translatable="false">Tether</string>
+    <string name="tile_label">Send Clipboard</string>
+
+    <!-- Tabs -->
+    <string name="tab_dashboard">Dashboard</string>
+    <string name="tab_clipboard">Clipboard</string>
+    <string name="tab_files">Files</string>
+    <string name="tab_settings">Settings</string>
+
+    <!-- Notifications -->
+    <string name="channel_running">Running</string>
+    <string name="channel_pairing">Pairing requests</string>
+    <string name="channel_files">Files</string>
+    <string name="channel_links">Links</string>
+    <string name="channel_problems">Problems</string>
+    <string name="status_starting">Starting…</string>
+    <string name="status_no_device">No device is connected</string>
+    <string name="status_connected">Connected to %1$s</string>
+    <string name="stop">Stop</string>
+    <string name="kind_phone">A phone</string>
+    <string name="kind_computer">A computer</string>
+    <string name="pairing_title">%1$s wants to pair</string>
+    <string name="pairing_text">%1$s, fingerprint %2$s</string>
+    <string name="allow">Allow</string>
+    <string name="deny">Deny</string>
+    <string name="file_received">From %1$s. Saved to Downloads.</string>
+    <string name="file_not_saved">Could not save %1$s</string>
+    <string name="file_not_sent">Could not send %1$s to %2$s</string>
+    <string name="link_title">Open the shared link</string>
+    <string name="not_started">Tether did not start</string>
+    <string name="peer_outdated">%1$s needs an update</string>
+    <string name="peer_outdated_text">It runs version %1$s, which is too old to sync with.</string>
+
+    <!-- Status -->
+    <string name="status_connected_short">Connected</string>
+    <string name="status_pairing">Pairing…</string>
+    <string name="status_searching">Searching…</string>
+    <string name="status_disconnected">Disconnected</string>
+    <string name="no_connection">No Connection</string>
+    <string name="off_title">Tether Is Off</string>
+    <string name="off_text">Turn it on to sync the clipboard and files with your paired devices.</string>
+    <string name="turn_on">Turn On</string>
+    <string name="not_listening">Cannot listen on port %1$d</string>
+    <string name="not_running">Tether is off</string>
+
+    <!-- Dashboard -->
+    <string name="quick_actions">Quick Actions</string>
+    <string name="send_clipboard">Send Clipboard</string>
+    <string name="send_files">Send Files</string>
+    <string name="my_devices">My Devices</string>
+    <string name="connected">Connected</string>
+    <string name="not_connected">Not connected</string>
+    <string name="discovered_devices">Discovered Devices</string>
+    <string name="searching_title">Searching for computers on your network…</string>
+    <string name="searching_text">Make sure Tether Desktop or tetherd runs on the computer.</string>
+    <string name="battery_title">Let Tether run in the background</string>
+    <string name="battery_text">Without this, the phone can stop Tether to save battery.</string>
+    <string name="enter_address">Connect Manually</string>
+    <string name="manual_connection">Manual Connection</string>
+    <string name="host">Host</string>
+    <string name="host_or_ip">Host or IP</string>
+    <string name="port">Port</string>
+    <string name="connect">Connect</string>
+    <string name="enter_address_text">For a computer that is not in the list, for example over Tailscale.</string>
+    <string name="pairing_accepted">Paired with %1$s</string>
+    <string name="pairing_rejected">The computer denied the request</string>
+    <string name="pairing_failed">Pairing failed: %1$s</string>
+
+    <!-- Pairing -->
+    <string name="pairing_sheet_title">Device Pairing</string>
+    <string name="pairing_inbound_computer">%1$s, a computer, wants to pair with this phone. Make sure the fingerprint below is the same on the computer.</string>
+    <string name="pairing_inbound_phone">%1$s, a phone, wants to pair with this phone. Make sure the fingerprint below is the same on the other phone.</string>
+    <string name="pairing_outbound">Waiting for %1$s. Allow the request on the computer. For tetherd, run tether accept with this fingerprint.</string>
+    <string name="their_fingerprint">Their Fingerprint</string>
+    <string name="your_fingerprint">Your Fingerprint</string>
+    <string name="accept">Accept</string>
+    <string name="reject">Reject</string>
+
+    <!-- Clipboard -->
+    <string name="clipboard_not_connected">Connect to a device to sync the clipboard</string>
+    <string name="send_to_devices">Send to Devices</string>
+    <string name="send_to_devices_text">Send the phone clipboard</string>
+    <string name="add_tile">Quick Settings</string>
+    <string name="add_tile_text">Add the Send Clipboard tile</string>
+    <string name="add_tile_by_hand">Edit Quick Settings and drag the Send Clipboard tile in.</string>
+    <string name="tile_already_added">The tile is already in Quick Settings</string>
+    <string name="history">History</string>
+    <string name="history_empty">No clipboard activity yet</string>
+    <string name="this_phone">This phone</string>
+    <string name="paired_device">Paired device</string>
+    <string name="image">Image</string>
+    <string name="copied_again">Copied, and sent to your devices</string>
+    <string name="image_gone">The image is no longer available</string>
+    <string name="send_clipboard_help">Android lets Tether read the clipboard only while Tether is open, so Tether sends what you copied each time you open it. At other times, use the Quick Settings tile, the notification, or share text to Tether.</string>
+    <plurals name="sent_to">
+        <item quantity="one">Sent to %d device</item>
+        <item quantity="other">Sent to %d devices</item>
+    </plurals>
+    <string name="sent_nobody">No device is connected</string>
+    <string name="clipboard_empty">Nothing to send</string>
+    <string name="clipboard_secret">The clipboard holds a password, so Tether did not send it</string>
+
+    <!-- Files -->
+    <string name="open_downloads">Open Downloads</string>
+    <string name="files_not_connected">Connect to a device to transfer files</string>
+    <string name="send_a_file">Send a File</string>
+    <string name="send_a_file_text">Transfer documents and archives</string>
+    <string name="send_a_photo">Send a Photo</string>
+    <string name="send_a_photo_text">Transfer from the photo library</string>
+    <string name="files_in_progress">In Progress</string>
+    <string name="completed">Completed</string>
+    <string name="no_transfers">No transfers yet</string>
+    <string name="outgoing_to">Outgoing to %1$s</string>
+    <string name="incoming_from">Incoming from %1$s</string>
+    <string name="tap_to_open">Tap to open · %1$s</string>
+    <string name="delivered">Delivered · %1$s</string>
+    <string name="transfer_failed">Failed: %1$s</string>
+    <string name="file_sent">Sent %1$s to %2$s</string>
+    <string name="sending_to">Sending to %1$s</string>
+    <plurals name="queued">
+        <item quantity="one">%d more file waits</item>
+        <item quantity="other">%d more files wait</item>
+    </plurals>
+    <plurals name="share_title">
+        <item quantity="one">Send %d file to</item>
+        <item quantity="other">Send %d files to</item>
+    </plurals>
+    <string name="share_nobody">No device is connected.</string>
+
+    <!-- Settings -->
+    <string name="this_device">This Device</string>
+    <string name="this_device_text">The name your devices see</string>
+    <string name="tls_fingerprint">TLS Fingerprint</string>
+    <string name="copy_fingerprint">Copy fingerprint</string>
+    <string name="fingerprint_copied">Fingerprint copied</string>
+    <string name="paired_devices">Paired Devices</string>
+    <string name="no_paired_devices">No paired devices</string>
+    <string name="swipe_to_unpair">Swipe left on a device to unpair it.</string>
+    <string name="unpair">Unpair</string>
+    <string name="unpair_title">Unpair %1$s?</string>
+    <string name="unpair_text">This device must pair again to connect.</string>
+    <string name="background">Background</string>
+    <string name="run_tether">Run Tether</string>
+    <string name="run_tether_text">Keep connections when the app is closed</string>
+    <string name="battery_label">Battery Optimization</string>
+    <string name="battery_unrestricted">Unrestricted: Tether keeps running</string>
+    <string name="battery_restricted">Restricted: the phone can stop Tether</string>
+    <string name="connection">Connection</string>
+    <string name="status">Status</string>
+    <string name="listening_label">Listening Port</string>
+    <string name="about">About</string>
+    <string name="version_label">Version</string>
+    <string name="engine_label">Engine</string>
+    <string name="protocol_label">Protocol</string>
+    <string name="service_type_label">Service Type</string>
+
+    <!-- Automatic sending, see ClipboardWatcher.kt -->
+    <string name="experimental">Experimental</string>
+    <string name="auto_send">Send Automatically</string>
+    <string name="auto_send_text">Send what you copy in other apps</string>
+    <string name="auto_send_active">On. Android shows a message each time Tether reads the clipboard.</string>
+    <string name="auto_send_needs_permission">Needs the 2 permissions below</string>
+    <string name="auto_send_needs_approval">Waiting for log access: leave Tether, open it again, and allow access in the dialog that Android shows</string>
+    <string name="auto_send_footer">Android gives an app in the background no clipboard. Tether reads the system log to know when you copy, and comes to the front for a moment to read the clipboard. Android asks for log access again each time Tether restarts, for example after a reboot.</string>
+    <string name="log_access">Log Access</string>
+    <string name="log_access_text">Only adb can grant it. Tap to copy the command:</string>
+    <string name="overlay_access">Display Over Other Apps</string>
+    <string name="overlay_access_text">Lets Tether come to the front from the background</string>
+    <string name="granted">Granted</string>
+    <string name="command_copied">Command copied</string>
+
+    <!-- Sync -->
+    <string name="sync">Sync</string>
+    <string name="write_clipboard">Write to the Clipboard</string>
+    <string name="write_clipboard_text">Put what your other devices copy on this phone\'s clipboard</string>
+    <string name="write_clipboard_footer">Android shows a preview each time an app writes the clipboard. Turn this off to keep clips from other devices in the history only, and tap one to copy it.</string>
+    <string name="access_messages">Clipboard Access Messages</string>
+    <string name="access_messages_text">To hide the message for each read, turn off \"Show clipboard access\" in the privacy settings. Then you also get no message when another app reads the clipboard.</string>
+</resources>
