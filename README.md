@@ -6,6 +6,8 @@ An Android peer for [Tether](https://github.com/zackb/tether). The iPhone app, [
 
 The project brings Android into the set of Tether Desktop: all the devices at hand share the clipboard and send files to each other, the phone too.
 
+<img src="assets/overview.svg" width="760" alt="The iPhone connects to one device at a time: a Mac, a Windows PC, an Android phone or a Linux computer. These devices share the clipboard and files with each other. Only tetherd on Linux also talks to the iPhone over Bluetooth, for messages, notifications and calls.">
+
 Tether for Android is not an official app of Tether, and the authors of Tether do not make it. It has the features of Tether Desktop and no more: the clipboard and files, over Wi-Fi. Messages, notifications and calls are between the iPhone and `tetherd`.
 
 ## Features
