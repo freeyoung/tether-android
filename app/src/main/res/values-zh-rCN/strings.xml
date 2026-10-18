@@ -165,4 +165,8 @@
     <string name="write_clipboard_footer">每次有应用写入剪贴板，安卓都会显示预览。关闭后，其他设备复制的内容只进历史记录，点一下才复制。</string>
     <string name="access_messages">剪贴板访问提示</string>
     <string name="access_messages_text">要隐藏每次读取时的提示，请在隐私设置里关闭“显示剪贴板访问通知”。关闭后，其他应用读取剪贴板时也不会再提示。</string>
+    <string name="send">发送</string>
+    <string name="send_photos">发送照片</string>
+    <string name="send_clipboard_all">发给所有已连接的设备：剪贴板总是和它们全部同步</string>
+    <string name="device_offline_text">它在同一个网络上，或者在上次的地址可以连到时，会自动连接。</string>
 </resources>

@@ -18,12 +18,10 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Switch
 import androidx.compose.material3.SwipeToDismissBox
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberSwipeToDismissBoxState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -159,20 +157,7 @@ fun SettingsScreen(s: Snapshot?, actions: AppActions) {
         }
     }
 
-    unpairing?.let { peer ->
-        AlertDialog(
-            onDismissRequest = { unpairing = null },
-            title = { Text(stringResource(R.string.unpair_title, peer.name)) },
-            text = { Text(stringResource(R.string.unpair_text)) },
-            confirmButton = {
-                TextButton(onClick = { Tether.forget(peer.fingerprint); unpairing = null }) {
-                    Text(stringResource(R.string.unpair), color = c.red)
-                }
-            },
-            dismissButton = { TextButton(onClick = { unpairing = null }) { Text(stringResource(android.R.string.cancel)) } },
-            containerColor = c.card,
-        )
-    }
+    unpairing?.let { peer -> UnpairDialog(peer) { unpairing = null } }
 }
 
 // The name peers show. The name in Android's settings, unless the user

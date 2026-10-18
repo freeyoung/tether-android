@@ -52,6 +52,9 @@ import io.github.freeyoung.tether.TetherService
 @Composable
 fun DashboardScreen(s: Snapshot?, actions: AppActions) {
     var manual by remember { mutableStateOf(false) }
+    // The device whose sheet is open, by fingerprint, so that the sheet
+    // follows its state.
+    var selected by remember { mutableStateOf<String?>(null) }
     val enabled = actions.enabled.value
     Page(
         title = stringResource(R.string.launcher_name),
@@ -83,7 +86,7 @@ fun DashboardScreen(s: Snapshot?, actions: AppActions) {
 
         if (s.peers.isNotEmpty()) {
             Section(stringResource(R.string.my_devices)) {
-                s.peers.forEach { peer -> PeerPanel(peer) { actions.pickFiles(peer) } }
+                s.peers.forEach { peer -> PeerPanel(peer) { selected = peer.fingerprint } }
             }
         }
 
@@ -109,6 +112,9 @@ fun DashboardScreen(s: Snapshot?, actions: AppActions) {
         }
     }
     if (manual) ManualConnectSheet { manual = false }
+    s?.peers?.firstOrNull { it.fingerprint == selected }?.let { peer ->
+        DeviceSheet(peer, actions) { selected = null }
+    }
 }
 
 // The big card at the top: a symbol in a glowing circle, what the phone is
@@ -164,9 +170,9 @@ private fun ActionTile(title: String, icon: Int, color: Color, modifier: Modifie
 }
 
 @Composable
-private fun PeerPanel(peer: Peer, onSendFiles: () -> Unit) {
+private fun PeerPanel(peer: Peer, onOpen: () -> Unit) {
     val c = Tint.colors
-    Panel(onClick = if (peer.connected) onSendFiles else null) {
+    Panel(onClick = onOpen) {
         PanelRow(
             icon = iconOf(peer),
             iconTint = if (peer.connected) c.teal else c.secondary,
@@ -180,10 +186,8 @@ private fun PeerPanel(peer: Peer, onSendFiles: () -> Unit) {
             },
             trailing = {
                 Sym(R.drawable.sym_verified_user_fill1, c.green, 18.dp)
-                if (peer.connected) {
-                    Spacer(Modifier.width(10.dp))
-                    Chevron()
-                }
+                Spacer(Modifier.width(10.dp))
+                Chevron()
             },
         )
     }

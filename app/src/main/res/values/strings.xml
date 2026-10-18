@@ -181,4 +181,8 @@
     <string name="write_clipboard_footer">Android shows a preview each time an app writes the clipboard. Turn this off to keep clips from other devices in the history only, and tap one to copy it.</string>
     <string name="access_messages">Clipboard Access Messages</string>
     <string name="access_messages_text">To hide the message for each read, turn off \"Show clipboard access\" in the privacy settings. Then you also get no message when another app reads the clipboard.</string>
+    <string name="send">Send</string>
+    <string name="send_photos">Send Photos</string>
+    <string name="send_clipboard_all">To every connected device: the clipboard syncs with all of them</string>
+    <string name="device_offline_text">It connects by itself when it is on the same network, or reachable at its last address.</string>
 </resources>
