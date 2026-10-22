@@ -1,5 +1,5 @@
-github.com/freeyoung/tether-core-go v0.7.0 h1:z+TOhU/W1EygJO9gRRVhfN2RSBAL2KMlQ1otpcxy+k4=
-github.com/freeyoung/tether-core-go v0.7.0/go.mod h1:FbNMnHpr8A0NWOOLhz1463ZAYS678ZCEdoM0uIheE/E=
+github.com/freeyoung/tether-core-go v0.7.1 h1:woXwobXv048XC/NI0EgZJE6RXR/PMicqheyxwnoi2tc=
+github.com/freeyoung/tether-core-go v0.7.1/go.mod h1:FbNMnHpr8A0NWOOLhz1463ZAYS678ZCEdoM0uIheE/E=
 github.com/miekg/dns v1.1.73 h1:uhT8nJxmTrPJYClxVxTCX+CVn6qnzSiybRk72Z6DgrE=
 github.com/miekg/dns v1.1.73/go.mod h1:RW2Obtfd5NZHvOFe3zYG0W8koWOQtAzyHaLo8vASBuQ=
 golang.org/x/crypto v0.58.0 h1:COkYLr4k7nDI4r6QtMML2AfzeIswWHAJthLS6K/M/54=
