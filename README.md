@@ -33,7 +33,7 @@ If Android says that the setting is restricted, open the page of Tether in Andro
 
 ## The clipboard on Android
 
-Clips from other devices go to the phone's clipboard at once, and Android shows its preview for each one. Settings > Sync > Write to the Clipboard turns this off: clips then go to the history only.
+Clips from other devices go to the phone's clipboard at once, and Android shows its preview for each one. Settings > Clipboard > Write to the Clipboard turns this off: clips then go to the history only.
 
 Android lets an app read the clipboard only while the app is on the screen. So Tether sends what you copied on the phone when you open Tether, when you tap Send Clipboard in Quick Settings or in the notification, and when you share text to Tether.
 

@@ -205,7 +205,7 @@ func eventually(t *testing.T, what string, cond func() bool) {
 }
 
 // pair has the desktop ask the phone to pair, and the phone approve, as with
-// Pair with a Computer > Enter Address on Tether Desktop.
+// Pair with a Device > Enter Address on Tether Desktop.
 func pair(t *testing.T, p *phone, d *desktop) {
 	t.Helper()
 	d.engine.PairWithComputer("127.0.0.1", p.port)

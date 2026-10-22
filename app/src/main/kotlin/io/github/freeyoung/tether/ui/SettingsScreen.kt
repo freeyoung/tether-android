@@ -106,23 +106,24 @@ fun SettingsScreen(s: Snapshot?, actions: AppActions) {
             }
         }
 
-        ListSection(stringResource(R.string.sync), footer = stringResource(R.string.write_clipboard_footer)) {
-            var write by remember { mutableStateOf(Prefs.writeClipboard(context)) }
-            ToggleRow(R.drawable.sym_content_paste, stringResource(R.string.write_clipboard), stringResource(R.string.write_clipboard_text), write) {
-                write = it
-                Prefs.setWriteClipboard(context, it)
-            }
-        }
-
-        NotificationsSection()
-
-        ListSection(stringResource(R.string.background), footer = stringResource(R.string.send_clipboard_help)) {
+        ListSection(stringResource(R.string.background)) {
             ToggleRow(
                 R.drawable.sym_power_settings_new, stringResource(R.string.run_tether), stringResource(R.string.run_tether_text),
                 actions.enabled.value,
             ) { actions.setEnabled(it) }
             RowDivider()
             BatteryRow()
+        }
+
+        ListSection(
+            stringResource(R.string.clipboard_section),
+            footer = stringResource(R.string.write_clipboard_footer) + "\n\n" + stringResource(R.string.send_clipboard_help),
+        ) {
+            var write by remember { mutableStateOf(Prefs.writeClipboard(context)) }
+            ToggleRow(R.drawable.sym_content_paste, stringResource(R.string.write_clipboard), stringResource(R.string.write_clipboard_text), write) {
+                write = it
+                Prefs.setWriteClipboard(context, it)
+            }
             RowDivider()
             PanelRow(
                 icon = R.drawable.sym_dashboard_customize_fill1, iconTint = c.teal,
@@ -131,6 +132,8 @@ fun SettingsScreen(s: Snapshot?, actions: AppActions) {
                 trailing = { Chevron() },
             )
         }
+
+        NotificationsSection()
 
         AutoSendSection(actions)
 

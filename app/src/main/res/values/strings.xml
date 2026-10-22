@@ -175,7 +175,7 @@
     <string name="command_copied">Command copied</string>
 
     <!-- Sync -->
-    <string name="sync">Sync</string>
+    <string name="clipboard_section">Clipboard</string>
     <string name="write_clipboard">Write to the Clipboard</string>
     <string name="write_clipboard_text">Put what your other devices copy on this phone\'s clipboard</string>
     <string name="write_clipboard_footer">Android shows a preview each time an app writes the clipboard. Turn this off to keep clips from other devices in the history only, and tap one to copy it.</string>
