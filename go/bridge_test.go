@@ -47,6 +47,8 @@ func (d *desktop) NotificationPosted(n core.Notification) {
 	d.posted = append(d.posted, n)
 	d.mu.Unlock()
 }
+func (d *desktop) MessagesRequested(string, int64)  {}
+func (d *desktop) MessagesAdded(string, []core.SMS) {}
 func (d *desktop) NotificationRemoved(_, id string) {
 	d.mu.Lock()
 	d.removed = append(d.removed, id)
@@ -93,7 +95,7 @@ func newDesktop(t *testing.T) (*desktop, int) {
 	port := freePort(t)
 	e, err := core.NewEngine(core.Config{
 		SupportDir: filepath.Join(root, "support"), DownloadsDir: filepath.Join(root, "downloads"),
-		DeviceName: "Desk", Port: port, ShowNotifications: true, Log: func(s string) { t.Log("desk: " + s) },
+		DeviceName: "Desk", Port: port, ShowNotifications: true, KeepMessages: true, Log: func(s string) { t.Log("desk: " + s) },
 	}, d.clipboard, nil)
 	if err != nil {
 		t.Fatal(err)
@@ -116,6 +118,7 @@ type event struct {
 	Peer        string        `json:"peer"`
 	Instance    string        `json:"instance"`
 	Snapshot    *snapshotJSON `json:"snapshot"`
+	Since       int64         `json:"since"`
 }
 
 // phone runs a Bridge and collects its events, as the app's event thread does.
@@ -133,7 +136,7 @@ func newPhone(t *testing.T) *phone {
 	p := &phone{root: root, port: freePort(t)}
 	b, err := Start(Config{
 		SupportDir: filepath.Join(root, "support"), DownloadsDir: filepath.Join(root, "received"),
-		ClipboardDir: filepath.Join(root, "clipboard"), DeviceName: "Pixel", Port: p.port,
+		ClipboardDir: filepath.Join(root, "clipboard"), DeviceName: "Pixel", Port: p.port, ProvideMessages: true,
 	}, func(s string) { t.Log("phone: " + s) })
 	if err != nil {
 		t.Fatal(err)
@@ -326,6 +329,29 @@ func TestNotificationsGoToTheDesktop(t *testing.T) {
 		defer d.mu.Unlock()
 		return len(d.removed) == 1 && d.removed[0] == "0|com.chat|7|null|10123"
 	})
+}
+
+func TestMessagesGoToTheDesktop(t *testing.T) {
+	p := newPhone(t)
+	d, _ := newDesktop(t)
+	d.approve = true
+	pair(t, p, d)
+	r := p.waitFor(t, func(e event) bool { return e.Event == "sms_requested" })
+	if r.Since != 0 {
+		t.Fatal("since", r.Since)
+	}
+	messages := []core.SMS{
+		{ID: 1, Thread: 7, Address: "+49 151 2345678", Name: "Alice", Date: 1000, Body: "Dinner? 🍜"},
+		{ID: 2, Thread: 7, Address: "+49 151 2345678", Name: "Alice", Date: 2000, Sent: true, Body: "Yes"},
+	}
+	p.call(t, "sms_batch", map[string]any{"fingerprint": r.Fingerprint, "messages": messages, "more": false})
+	store := d.engine.Messages()
+	eventually(t, "messages", func() bool {
+		c := store.Conversations("")
+		return len(c) == 1 && c[0].Count == 2 && c[0].Name == "Alice" && c[0].Last.Body == "Yes"
+	})
+	p.call(t, "sms_changed", nil)
+	p.waitFor(t, func(e event) bool { return e.Event == "sms_requested" && e.Since == 2000 })
 }
 
 func TestPhonePairsWithDiscoveredComputer(t *testing.T) {

@@ -48,6 +48,11 @@ object Prefs {
         if (apps.getString(app, null) != name) apps.edit().putString(app, name).apply()
     }
 
+    // Whether computers that keep text messages get this phone's (SmsSource).
+    fun syncMessages(context: Context) = prefs(context).getBoolean("syncMessages", false)
+
+    fun setSyncMessages(context: Context, on: Boolean) = prefs(context).edit().putBoolean("syncMessages", on).apply()
+
     // The name peers show for this phone, when the user set one in the app.
     fun deviceName(context: Context): String? = prefs(context).getString("deviceName", null)
 

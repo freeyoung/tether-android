@@ -56,4 +56,5 @@ data class Event(
     val instance: String = "",
     val port: Int = 0,
     val version: String = "",
+    val since: Long = 0,
 )

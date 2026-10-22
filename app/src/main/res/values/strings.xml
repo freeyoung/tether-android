@@ -199,4 +199,9 @@
     </plurals>
     <string name="notification_apps_footer">An app shows here after its first notification. Turn an app off to keep its notifications on the phone.</string>
     <string name="no_notification_apps">No apps yet</string>
+    <string name="messages">Text Messages</string>
+    <string name="sync_messages">Sync Text Messages</string>
+    <string name="sync_messages_text">Keep this phone\'s text messages on Tether Desktop for macOS</string>
+    <string name="sync_messages_footer">Only text messages (SMS). Chats in Google Messages (RCS) and in other apps come as notifications only. The Mac keeps every message, also the ones you delete on the phone.</string>
+    <string name="sms_permission_denied">Tether needs access to text messages for this.</string>
 </resources>

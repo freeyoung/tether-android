@@ -29,6 +29,8 @@ object Tether {
         val clipboardDir: String,
         val deviceName: String,
         val port: Int,
+        // Answer sms_requested: see SmsSource.
+        val provideMessages: Boolean = false,
     )
 
     val json = Json { ignoreUnknownKeys = true }
@@ -148,6 +150,16 @@ object Tether {
         })
 
     fun removeNotification(id: String) = call("remove_notification", buildJsonObject { put("id", id) })
+
+    // One batch of text messages for the computer that asked (sms_requested).
+    fun sendMessages(fingerprint: String, messages: List<Sms>, more: Boolean) = call("sms_batch", buildJsonObject {
+        put("fingerprint", fingerprint)
+        put("messages", json.encodeToJsonElement(ListSerializer(Sms.serializer()), messages))
+        put("more", more)
+    })
+
+    // The phone has new text messages: the computers ask for them.
+    fun messagesChanged() = call("sms_changed")
 
     fun discovered(services: List<Service>) = call("discovered", buildJsonObject {
         put("services", json.encodeToJsonElement(ListSerializer(Service.serializer()), services))

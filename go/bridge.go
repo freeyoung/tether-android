@@ -28,6 +28,9 @@ type Config struct {
 	ClipboardDir string `json:"clipboardDir"`
 	DeviceName   string `json:"deviceName"`
 	Port         int    `json:"port"`
+	// The app gives the phone's text messages to computers that keep them:
+	// it answers sms_requested with sms_batch.
+	ProvideMessages bool `json:"provideMessages"`
 }
 
 // Bridge is one running engine.
@@ -46,7 +49,7 @@ func Start(cfg Config, log func(string)) (*Bridge, error) {
 	b.clipboard = &memoryClipboard{dir: cfg.ClipboardDir, onWrite: b.clipboardWritten, log: log}
 	b.discovery = &relayDiscovery{emit: b.emit}
 	engine, err := core.NewEngine(core.Config{
-		SupportDir: cfg.SupportDir, DownloadsDir: cfg.DownloadsDir, DeviceName: cfg.DeviceName, Port: cfg.Port, Log: log,
+		SupportDir: cfg.SupportDir, DownloadsDir: cfg.DownloadsDir, DeviceName: cfg.DeviceName, Port: cfg.Port, ProvideMessages: cfg.ProvideMessages, Log: log,
 	}, b.clipboard, b.discovery)
 	if err != nil {
 		return nil, err
@@ -78,6 +81,9 @@ type args struct {
 	// post_notification and remove_notification.
 	Notification notificationJSON `json:"notification"`
 	ID           string           `json:"id"`
+	// sms_batch.
+	Messages []core.SMS `json:"messages"`
+	More     bool       `json:"more"`
 }
 
 // notificationJSON is a notification on this phone, as NotificationMirror
@@ -139,6 +145,10 @@ func (b *Bridge) Call(op string, raw []byte) ([]byte, error) {
 		e.PostNotification(core.Notification{ID: n.ID, App: n.App, AppName: n.AppName, Title: n.Title, Text: n.Text, Time: n.Time})
 	case "remove_notification":
 		e.RemoveNotification(a.ID)
+	case "sms_batch":
+		e.SendMessages(a.Fingerprint, a.Messages, a.More)
+	case "sms_changed":
+		e.MessagesChanged()
 	case "discovered":
 		list := make([]core.Discovered, 0, len(a.Services))
 		for _, s := range a.Services {
@@ -221,6 +231,15 @@ func (d delegate) PeerOutdated(name, version string) {
 func (d delegate) NotificationPosted(core.Notification) {}
 
 func (d delegate) NotificationRemoved(string, string) {}
+
+// MessagesRequested: the app answers with sms_batch, the messages from the
+// date since on, the oldest first.
+func (d delegate) MessagesRequested(fp string, since int64) {
+	d.b.emit("sms_requested", map[string]any{"fingerprint": fp, "since": since})
+}
+
+// The phone gives messages; it does not keep those of others.
+func (d delegate) MessagesAdded(string, []core.SMS) {}
 
 // MARK: - Clipboard
 

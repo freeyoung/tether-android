@@ -182,4 +182,9 @@
     </plurals>
     <string name="notification_apps_footer">应用发出第一条通知后会出现在这里。关闭一个应用后，它的通知只留在手机上。</string>
     <string name="no_notification_apps">还没有应用</string>
+    <string name="messages">短信</string>
+    <string name="sync_messages">同步短信</string>
+    <string name="sync_messages_text">把这台手机的短信保存到 macOS 版 Tether Desktop</string>
+    <string name="sync_messages_footer">只同步普通短信（SMS）。Google Messages 里的聊天（RCS）和其他应用的消息只以通知的形式出现。Mac 会保留所有短信，包括你在手机上删掉的。</string>
+    <string name="sms_permission_denied">需要短信权限才能同步。</string>
 </resources>

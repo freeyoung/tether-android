@@ -8,7 +8,7 @@ The project brings Android into the set of Tether Desktop: all the devices at ha
 
 <img src="assets/overview.svg" width="760" alt="The iPhone connects to one device at a time: a Mac, a Windows PC, an Android phone or a Linux computer. These devices share the clipboard and files with each other. Only tetherd on Linux also talks to the iPhone over Bluetooth, for messages, notifications and calls.">
 
-Tether for Android is not an official app of Tether, and the authors of Tether do not make it. It has the features of Tether Desktop, the clipboard and files over Wi-Fi, and it also sends its notifications to Tether Desktop on macOS. Messages and calls are between the iPhone and `tetherd`.
+Tether for Android is not an official app of Tether, and the authors of Tether do not make it. It has the features of Tether Desktop, the clipboard and files over Wi-Fi, and it also sends its notifications and text messages to Tether Desktop on macOS. Messages and calls are between the iPhone and `tetherd`.
 
 ## Features
 
@@ -18,6 +18,7 @@ Tether for Android is not an official app of Tether, and the authors of Tether d
 - Receives files into Downloads. Sends files and photos from the app or from the share sheet.
 - Opens links that the iPhone shares: at once while Tether is on the screen, else from a notification.
 - Sends the phone's notifications to Tether Desktop on macOS. You choose the apps, see [Notifications](#notifications).
+- Sends the phone's text messages to Tether Desktop on macOS, which keeps them, see [Text messages](#text-messages).
 
 The screens follow the iPhone app: Dashboard, Clipboard, Files and Settings.
 
@@ -30,6 +31,12 @@ Settings > Notifications > Send Notifications sends the phone's notifications to
 Silent and ongoing notifications, such as music and navigation, stay on the phone. An app shows under Apps after its first notification. Turn an app off there to keep its notifications on the phone.
 
 If Android says that the setting is restricted, open the page of Tether in Android's settings, tap the menu at the top, and choose Allow restricted settings. Android does this for apps that are not from a store.
+
+## Text messages
+
+Settings > Text Messages > Sync Text Messages gives the phone's text messages (SMS) to Tether Desktop on macOS. Android asks for access to the messages and to the contacts, for the names. The Mac keeps every message, also the ones that you later delete on the phone, and shows them under Messages in the submenu of the phone. New messages arrive there in a few seconds.
+
+Chats in Google Messages (RCS) and in other apps are not text messages: they come as notifications only. Tether for Android does not send messages for you.
 
 ## The clipboard on Android
 

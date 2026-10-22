@@ -1,11 +1,14 @@
 package io.github.freeyoung.tether.ui
 
+import android.Manifest
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.provider.Settings
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -56,6 +59,7 @@ import io.github.freeyoung.tether.NotificationMirror
 import io.github.freeyoung.tether.Peer
 import io.github.freeyoung.tether.Prefs
 import io.github.freeyoung.tether.R
+import io.github.freeyoung.tether.SmsSource
 import io.github.freeyoung.tether.Snapshot
 import io.github.freeyoung.tether.Tether
 import io.github.freeyoung.tether.TetherService
@@ -134,6 +138,8 @@ fun SettingsScreen(s: Snapshot?, actions: AppActions) {
         }
 
         NotificationsSection()
+
+        MessagesSection(actions)
 
         AutoSendSection(actions)
 
@@ -295,6 +301,35 @@ private fun NotificationsSection() {
         NotificationAppsSheet {
             apps = false
             muted = Prefs.mutedApps(context).size
+        }
+    }
+}
+
+// Gives the phone's text messages to computers that keep them (SmsSource).
+// The engine announces it in hello, so it starts again after a change.
+@Composable
+private fun MessagesSection(actions: AppActions) {
+    val context = LocalContext.current
+    val res = LocalResources.current
+    var on by remember { mutableStateOf(SmsSource.enabled(context)) }
+    fun apply(value: Boolean) {
+        on = value
+        Prefs.setSyncMessages(context, value)
+        if (actions.enabled.value) {
+            TetherService.stop(context)
+            TetherService.start(context)
+        }
+    }
+    val ask = rememberLauncherForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { granted ->
+        if (granted[Manifest.permission.READ_SMS] == true) apply(true) else actions.show(res.getString(R.string.sms_permission_denied))
+    }
+    ListSection(stringResource(R.string.messages), footer = stringResource(R.string.sync_messages_footer)) {
+        ToggleRow(R.drawable.sym_sms, stringResource(R.string.sync_messages), stringResource(R.string.sync_messages_text), on) {
+            when {
+                !it -> apply(false)
+                SmsSource.hasAccess(context) -> apply(true)
+                else -> ask.launch(arrayOf(Manifest.permission.READ_SMS, Manifest.permission.READ_CONTACTS))
+            }
         }
     }
 }

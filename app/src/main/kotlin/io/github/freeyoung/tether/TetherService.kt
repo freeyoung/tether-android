@@ -5,6 +5,7 @@ import android.app.Service
 import android.content.Context
 import android.content.Intent
 import android.content.pm.ServiceInfo
+import android.database.ContentObserver
 import android.net.ConnectivityManager
 import android.net.Network
 import android.net.Uri
@@ -34,6 +35,7 @@ class TetherService : Service() {
     private lateinit var discovery: Discovery
     private var network: Network? = null
     private var networkCallback: ConnectivityManager.NetworkCallback? = null
+    private var smsObserver: ContentObserver? = null
 
     override fun onBind(intent: Intent?): IBinder? = null
 
@@ -52,6 +54,7 @@ class TetherService : Service() {
                 clipboardDir = File(cacheDir, "clipboard").path,
                 deviceName = deviceName(this),
                 port = PORT,
+                provideMessages = SmsSource.enabled(this),
             ),
         ) { event -> main.post { handle(event) } }
         if (error != null) {
@@ -61,6 +64,7 @@ class TetherService : Service() {
             return
         }
         watchNetwork()
+        if (SmsSource.enabled(this)) smsObserver = SmsSource.observe(this) { Tether.messagesChanged() }
         // The notification names the connected devices.
         Tether.state
             .map { it?.connected?.map { p -> p.name } }
@@ -84,6 +88,7 @@ class TetherService : Service() {
 
     override fun onDestroy() {
         scope.cancel()
+        smsObserver?.let { contentResolver.unregisterContentObserver(it) }
         networkCallback?.let { getSystemService(ConnectivityManager::class.java).unregisterNetworkCallback(it) }
         discovery.stop()
         ClipboardWatcher.stop(this)
@@ -122,6 +127,17 @@ class TetherService : Service() {
                 val size = Files.sent(this, event.name)
                 History.file(event.name, event.peer, incoming = false, ok = event.ok, reason = event.reason, size = size, uri = null)
                 if (!event.ok) Notifications.fileNotSent(this, event.name, event.peer, event.reason)
+            }
+            // A computer asks for text messages. Without access, an empty batch
+            // ends its sync.
+            "sms_requested" -> scope.launch(Dispatchers.IO) {
+                val (messages, more) = try {
+                    SmsSource.read(this@TetherService, event.since)
+                } catch (e: Exception) {
+                    Log.e(TAG, "could not read the text messages", e)
+                    emptyList<Sms>() to false
+                }
+                Tether.sendMessages(event.fingerprint, messages, more)
             }
             "failed" -> Notifications.problem(this, getString(R.string.app_name), event.message)
             "peer_outdated" -> Notifications.problem(this, getString(R.string.peer_outdated, event.name), getString(R.string.peer_outdated_text, event.version))

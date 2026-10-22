@@ -2,7 +2,7 @@ module tetherandroid
 
 go 1.27.1
 
-require github.com/freeyoung/tether-core-go v0.6.0
+require github.com/freeyoung/tether-core-go v0.7.0
 
 require (
 	github.com/miekg/dns v1.1.73 // indirect
