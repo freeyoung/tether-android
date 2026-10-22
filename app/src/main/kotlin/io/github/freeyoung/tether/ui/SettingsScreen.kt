@@ -2,7 +2,9 @@ package io.github.freeyoung.tether.ui
 
 import android.content.ClipData
 import android.content.ClipboardManager
+import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.provider.Settings
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -50,6 +52,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.core.net.toUri
 import io.github.freeyoung.tether.ClipboardWatcher
 import io.github.freeyoung.tether.BuildConfig
+import io.github.freeyoung.tether.NotificationMirror
 import io.github.freeyoung.tether.Peer
 import io.github.freeyoung.tether.Prefs
 import io.github.freeyoung.tether.R
@@ -110,6 +113,8 @@ fun SettingsScreen(s: Snapshot?, actions: AppActions) {
                 Prefs.setWriteClipboard(context, it)
             }
         }
+
+        NotificationsSection()
 
         ListSection(stringResource(R.string.background), footer = stringResource(R.string.send_clipboard_help)) {
             ToggleRow(
@@ -229,16 +234,78 @@ private fun ToggleRow(icon: Int, title: String, subtitle: String, checked: Boole
     PanelRow(
         icon = icon, iconTint = c.teal, title = title, subtitle = subtitle,
         onClick = { onChange(!checked) },
-        trailing = {
-            Switch(
-                checked, onChange,
-                colors = SwitchDefaults.colors(
-                    checkedTrackColor = c.green, checkedThumbColor = Color.White, checkedBorderColor = c.green,
-                    uncheckedTrackColor = c.fill, uncheckedThumbColor = Color.White, uncheckedBorderColor = c.fill,
-                ),
-            )
-        },
+        trailing = { TintSwitch(checked, onChange) },
     )
+}
+
+@Composable
+fun TintSwitch(checked: Boolean, onChange: (Boolean) -> Unit) {
+    val c = Tint.colors
+    Switch(
+        checked, onChange,
+        colors = SwitchDefaults.colors(
+            checkedTrackColor = c.green, checkedThumbColor = Color.White, checkedBorderColor = c.green,
+            uncheckedTrackColor = c.fill, uncheckedThumbColor = Color.White, uncheckedBorderColor = c.fill,
+        ),
+    )
+}
+
+// Sends the phone's notifications to computers (NotificationMirror), and the
+// steps it needs.
+@Composable
+private fun NotificationsSection() {
+    val c = Tint.colors
+    val context = LocalContext.current
+    val res = LocalResources.current
+    var on by remember { mutableStateOf(Prefs.mirrorNotifications(context)) }
+    var access by remember { mutableStateOf(NotificationMirror.hasAccess(context)) }
+    var muted by remember { mutableStateOf(Prefs.mutedApps(context).size) }
+    var apps by remember { mutableStateOf(false) }
+    LifecycleEventEffect(Lifecycle.Event.ON_RESUME) { access = NotificationMirror.hasAccess(context) }
+    ListSection(stringResource(R.string.notifications), footer = stringResource(R.string.mirror_notifications_footer)) {
+        ToggleRow(R.drawable.sym_notifications, stringResource(R.string.mirror_notifications), stringResource(R.string.mirror_notifications_text), on) {
+            on = it
+            Prefs.setMirrorNotifications(context, it)
+            if (it && !access) openNotificationAccess(context)
+        }
+        if (on) {
+            RowDivider()
+            PanelRow(
+                icon = R.drawable.sym_verified_user_fill1, iconTint = if (access) c.green else c.orange,
+                title = stringResource(R.string.notification_access),
+                subtitle = stringResource(if (access) R.string.granted else R.string.notification_access_text),
+                onClick = { openNotificationAccess(context) },
+                trailing = { Chevron() },
+            )
+            RowDivider()
+            PanelRow(
+                icon = R.drawable.sym_apps, iconTint = c.teal,
+                title = stringResource(R.string.notification_apps),
+                subtitle = if (muted == 0) stringResource(R.string.notification_apps_all)
+                else res.getQuantityString(R.plurals.notification_apps_off, muted, muted),
+                onClick = { apps = true },
+                trailing = { Chevron() },
+            )
+        }
+    }
+    if (apps) {
+        NotificationAppsSheet {
+            apps = false
+            muted = Prefs.mutedApps(context).size
+        }
+    }
+}
+
+// The page of NotificationMirror in Android's settings, where the user allows
+// it. Android 10 has only the list of all such apps.
+private fun openNotificationAccess(context: Context) {
+    val intent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+        Intent(Settings.ACTION_NOTIFICATION_LISTENER_DETAIL_SETTINGS)
+            .putExtra(Settings.EXTRA_NOTIFICATION_LISTENER_COMPONENT_NAME, NotificationMirror.component(context).flattenToString())
+    } else {
+        Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS)
+    }
+    context.startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
 }
 
 @Composable

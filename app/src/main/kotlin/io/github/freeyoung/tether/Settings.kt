@@ -23,6 +23,31 @@ object Prefs {
 
     fun setAutoSend(context: Context, on: Boolean) = prefs(context).edit().putBoolean("autoSend", on).apply()
 
+    // Whether NotificationMirror sends the phone's notifications to computers.
+    fun mirrorNotifications(context: Context) = prefs(context).getBoolean("mirrorNotifications", true)
+
+    fun setMirrorNotifications(context: Context, on: Boolean) =
+        prefs(context).edit().putBoolean("mirrorNotifications", on).apply()
+
+    // The apps whose notifications stay on the phone. Those of all other apps go out.
+    fun mutedApps(context: Context): Set<String> = prefs(context).getStringSet("mutedApps", null).orEmpty().toSet()
+
+    fun setAppMuted(context: Context, app: String, muted: Boolean) {
+        val apps = if (muted) mutedApps(context) + app else mutedApps(context) - app
+        prefs(context).edit().putStringSet("mutedApps", apps).apply()
+    }
+
+    // The apps that posted a notification, with their names, for the list in Settings.
+    private fun notificationApps(context: Context) = context.getSharedPreferences("notificationApps", Context.MODE_PRIVATE)
+
+    fun seenApps(context: Context): Map<String, String> =
+        notificationApps(context).all.mapNotNull { (app, name) -> (name as? String)?.let { app to it } }.toMap()
+
+    fun addSeenApp(context: Context, app: String, name: String) {
+        val apps = notificationApps(context)
+        if (apps.getString(app, null) != name) apps.edit().putString(app, name).apply()
+    }
+
     // The name peers show for this phone, when the user set one in the app.
     fun deviceName(context: Context): String? = prefs(context).getString("deviceName", null)
 

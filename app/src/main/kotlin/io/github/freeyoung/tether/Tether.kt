@@ -134,6 +134,21 @@ object Tether {
 
     fun copyPng(path: String) = call("copy_png", buildJsonObject { put("path", path) })
 
+    // A notification on this phone, for the computers that show them.
+    fun postNotification(id: String, app: String, appName: String, title: String, text: String, time: Long) =
+        call("post_notification", buildJsonObject {
+            put("notification", buildJsonObject {
+                put("id", id)
+                put("app", app)
+                put("appName", appName)
+                put("title", title)
+                put("text", text)
+                put("time", time)
+            })
+        })
+
+    fun removeNotification(id: String) = call("remove_notification", buildJsonObject { put("id", id) })
+
     fun discovered(services: List<Service>) = call("discovered", buildJsonObject {
         put("services", json.encodeToJsonElement(ListSerializer(Service.serializer()), services))
     })

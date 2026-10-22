@@ -22,6 +22,8 @@ type desktop struct {
 	mu        sync.Mutex
 	writes    []core.Content
 	received  []string
+	posted    []core.Notification
+	removed   []string
 	approve   bool
 }
 
@@ -40,6 +42,16 @@ func (d *desktop) Failed(string)                         {}
 func (d *desktop) StateChanged()                         {}
 func (d *desktop) PeerOutdated(string, string)           {}
 func (d *desktop) FileSent(string, string, bool, string) {}
+func (d *desktop) NotificationPosted(n core.Notification) {
+	d.mu.Lock()
+	d.posted = append(d.posted, n)
+	d.mu.Unlock()
+}
+func (d *desktop) NotificationRemoved(_, id string) {
+	d.mu.Lock()
+	d.removed = append(d.removed, id)
+	d.mu.Unlock()
+}
 func (d *desktop) FileReceived(path, _ string) {
 	d.mu.Lock()
 	d.received = append(d.received, path)
@@ -81,7 +93,7 @@ func newDesktop(t *testing.T) (*desktop, int) {
 	port := freePort(t)
 	e, err := core.NewEngine(core.Config{
 		SupportDir: filepath.Join(root, "support"), DownloadsDir: filepath.Join(root, "downloads"),
-		DeviceName: "Desk", Port: port, Log: func(s string) { t.Log("desk: " + s) },
+		DeviceName: "Desk", Port: port, ShowNotifications: true, Log: func(s string) { t.Log("desk: " + s) },
 	}, d.clipboard, nil)
 	if err != nil {
 		t.Fatal(err)
@@ -286,6 +298,34 @@ func TestFilesBothWays(t *testing.T) {
 	if got, _ := os.ReadFile(d.receivedFiles()[0]); string(got) != "jpeg bytes" {
 		t.Fatalf("desktop got %q", got)
 	}
+}
+
+func TestNotificationsGoToTheDesktop(t *testing.T) {
+	p := newPhone(t)
+	d, _ := newDesktop(t)
+	d.approve = true
+	pair(t, p, d)
+	n := map[string]any{"id": "0|com.chat|7|null|10123", "app": "com.chat", "appName": "Chat", "title": "Alice", "text": "Dinner? 🍜", "time": 1792650000000}
+	// The desktop's hello may still be on its way: post until it arrives.
+	eventually(t, "notification", func() bool {
+		p.call(t, "post_notification", map[string]any{"notification": n})
+		d.mu.Lock()
+		defer d.mu.Unlock()
+		return len(d.posted) > 0
+	})
+	d.mu.Lock()
+	got := d.posted[0]
+	d.mu.Unlock()
+	if got.ID != "0|com.chat|7|null|10123" || got.App != "com.chat" || got.AppName != "Chat" || got.Title != "Alice" ||
+		got.Text != "Dinner? 🍜" || got.Time != 1792650000000 || got.PeerName != "Pixel" {
+		t.Fatalf("%+v", got)
+	}
+	p.call(t, "remove_notification", map[string]string{"id": "0|com.chat|7|null|10123"})
+	eventually(t, "removal", func() bool {
+		d.mu.Lock()
+		defer d.mu.Unlock()
+		return len(d.removed) == 1 && d.removed[0] == "0|com.chat|7|null|10123"
+	})
 }
 
 func TestPhonePairsWithDiscoveredComputer(t *testing.T) {

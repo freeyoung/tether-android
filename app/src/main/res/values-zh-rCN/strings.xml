@@ -169,4 +169,17 @@
     <string name="send_photos">发送照片</string>
     <string name="send_clipboard_all">发给所有已连接的设备：剪贴板总是和它们全部同步</string>
     <string name="device_offline_text">它在同一个网络上，或者在上次的地址可以连到时，会自动连接。</string>
+    <string name="notifications">通知</string>
+    <string name="mirror_notifications">发送通知</string>
+    <string name="mirror_notifications_text">在 macOS 版 Tether Desktop 上显示这台手机的通知</string>
+    <string name="mirror_notifications_footer">静默通知和常驻通知（比如音乐、导航）只留在手机上。</string>
+    <string name="notification_access">通知使用权</string>
+    <string name="notification_access_text">允许 Tether 读取通知</string>
+    <string name="notification_apps">应用</string>
+    <string name="notification_apps_all">所有应用</string>
+    <plurals name="notification_apps_off">
+        <item quantity="other">已关闭 %d 个应用</item>
+    </plurals>
+    <string name="notification_apps_footer">应用发出第一条通知后会出现在这里。关闭一个应用后，它的通知只留在手机上。</string>
+    <string name="no_notification_apps">还没有应用</string>
 </resources>

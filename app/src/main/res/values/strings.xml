@@ -185,4 +185,18 @@
     <string name="send_photos">Send Photos</string>
     <string name="send_clipboard_all">To every connected device: the clipboard syncs with all of them</string>
     <string name="device_offline_text">It connects by itself when it is on the same network, or reachable at its last address.</string>
+    <string name="notifications">Notifications</string>
+    <string name="mirror_notifications">Send Notifications</string>
+    <string name="mirror_notifications_text">Show this phone\'s notifications on Tether Desktop for macOS</string>
+    <string name="mirror_notifications_footer">Silent and ongoing notifications, such as music and navigation, stay on the phone.</string>
+    <string name="notification_access">Notification Access</string>
+    <string name="notification_access_text">Allow Tether to read the notifications</string>
+    <string name="notification_apps">Apps</string>
+    <string name="notification_apps_all">All apps</string>
+    <plurals name="notification_apps_off">
+        <item quantity="one">%d app is off</item>
+        <item quantity="other">%d apps are off</item>
+    </plurals>
+    <string name="notification_apps_footer">An app shows here after its first notification. Turn an app off to keep its notifications on the phone.</string>
+    <string name="no_notification_apps">No apps yet</string>
 </resources>

@@ -75,6 +75,20 @@ type args struct {
 	Text        string           `json:"text"`
 	Path        string           `json:"path"`
 	Services    []discoveredJSON `json:"services"`
+	// post_notification and remove_notification.
+	Notification notificationJSON `json:"notification"`
+	ID           string           `json:"id"`
+}
+
+// notificationJSON is a notification on this phone, as NotificationMirror
+// reads it.
+type notificationJSON struct {
+	ID      string `json:"id"`
+	App     string `json:"app"`
+	AppName string `json:"appName"`
+	Title   string `json:"title"`
+	Text    string `json:"text"`
+	Time    int64  `json:"time"`
 }
 
 // Call runs one operation and returns its result as JSON.
@@ -120,6 +134,11 @@ func (b *Bridge) Call(op string, raw []byte) ([]byte, error) {
 		}
 		b.clipboard.userCopies(core.PNGContent(png))
 		e.CheckLocalClipboard()
+	case "post_notification":
+		n := a.Notification
+		e.PostNotification(core.Notification{ID: n.ID, App: n.App, AppName: n.AppName, Title: n.Title, Text: n.Text, Time: n.Time})
+	case "remove_notification":
+		e.RemoveNotification(a.ID)
 	case "discovered":
 		list := make([]core.Discovered, 0, len(a.Services))
 		for _, s := range a.Services {
@@ -197,6 +216,11 @@ func (d delegate) StateChanged() { d.b.pushState() }
 func (d delegate) PeerOutdated(name, version string) {
 	d.b.emit("peer_outdated", map[string]any{"name": name, "version": version})
 }
+
+// The phone sends notifications; it does not show those of others.
+func (d delegate) NotificationPosted(core.Notification) {}
+
+func (d delegate) NotificationRemoved(string, string) {}
 
 // MARK: - Clipboard
 

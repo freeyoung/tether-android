@@ -8,7 +8,7 @@ The project brings Android into the set of Tether Desktop: all the devices at ha
 
 <img src="assets/overview.svg" width="760" alt="The iPhone connects to one device at a time: a Mac, a Windows PC, an Android phone or a Linux computer. These devices share the clipboard and files with each other. Only tetherd on Linux also talks to the iPhone over Bluetooth, for messages, notifications and calls.">
 
-Tether for Android is not an official app of Tether, and the authors of Tether do not make it. It has the features of Tether Desktop and no more: the clipboard and files, over Wi-Fi. Messages, notifications and calls are between the iPhone and `tetherd`.
+Tether for Android is not an official app of Tether, and the authors of Tether do not make it. It has the features of Tether Desktop, the clipboard and files over Wi-Fi, and it also sends its notifications to Tether Desktop on macOS. Messages and calls are between the iPhone and `tetherd`.
 
 ## Features
 
@@ -17,10 +17,19 @@ Tether for Android is not an official app of Tether, and the authors of Tether d
 - Keeps a history of the clipboard. Tap an entry to copy it again.
 - Receives files into Downloads. Sends files and photos from the app or from the share sheet.
 - Opens links that the iPhone shares: at once while Tether is on the screen, else from a notification.
+- Sends the phone's notifications to Tether Desktop on macOS. You choose the apps, see [Notifications](#notifications).
 
 The screens follow the iPhone app: Dashboard, Clipboard, Files and Settings.
 
 <img src="assets/dashboard.png" width="270" alt="The Dashboard screen: connected to Office PC, with linux-pc and MacBook Air paired but not connected.">
+
+## Notifications
+
+Settings > Notifications > Send Notifications sends the phone's notifications to Tether Desktop on macOS. Android asks you to allow Notification access first. The Mac shows each notification with the name of the app, and removes it when it goes away on the phone. Tether Desktop on Windows and `tetherd` do not show them.
+
+Silent and ongoing notifications, such as music and navigation, stay on the phone. An app shows under Apps after its first notification. Turn an app off there to keep its notifications on the phone.
+
+If Android says that the setting is restricted, open the page of Tether in Android's settings, tap the menu at the top, and choose Allow restricted settings. Android does this for apps that are not from a store.
 
 ## The clipboard on Android
 
