@@ -157,7 +157,7 @@
     <string name="engine_label">Engine</string>
     <string name="protocol_label">Protocol</string>
     <string name="service_type_label">Service Type</string>
-    <string name="unofficial">Tether for Android is not an official app of Tether, and its authors do not make it. It syncs the clipboard and files only, as Tether Desktop does. Messages, notifications and calls are between the iPhone and tetherd.</string>
+    <string name="unofficial">Tether for Android is not an official app of Tether, and its authors do not make it. It syncs the clipboard and files, as Tether Desktop does, and sends its notifications and text messages to Tether Desktop on macOS. The iPhone\'s messages, notifications and calls are between the iPhone and tetherd.</string>
 
     <!-- Automatic sending, see ClipboardWatcher.kt -->
     <string name="experimental">Experimental</string>
